@@ -4,8 +4,8 @@
 #include <cstring>
 using namespace std;
 
-int Interprete::getIDInterprete(){return idInterprete;}
-char* Interprete::getNombre(){return nombre;}
+const int Interprete::getIDInterprete() const {return idInterprete;}
+const char* Interprete::getNombre() const {return nombre;}
 int Interprete::getSuscriptores(){return suscriptores;}
 bool Interprete::getNotificaciones(){return notificaciones;}
 bool Interprete::getEstado(){return estado;}

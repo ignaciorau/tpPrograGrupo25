@@ -7,3 +7,11 @@ const std::vector <Usuario>& Repositorio::getUsuarios() const{
 void Repositorio::agregarUsuario(const Usuario& nuevoUsuario){
     _usuarios.push_back(nuevoUsuario);
 }
+
+const std::vector <Interprete>& Repositorio::getInterprete() const{
+    return _interpretes;
+}
+
+void Repositorio::agregarInterprete(const Interprete& nuevoInterprete){
+    _interpretes.push_back(nuevoInterprete);
+}

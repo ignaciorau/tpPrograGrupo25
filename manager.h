@@ -13,4 +13,5 @@ public:
     bool intentarLogin(int idUsuario, const char* mail, Usuario &usuarioLogueado);
     bool cargarDatosDesdeArchivos();
     bool guardarUsuarioEnArchivo(const Usuario& nuevoUsuario);
+    int buscarInterprete();
 };
