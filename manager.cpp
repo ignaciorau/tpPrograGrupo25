@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdio>
 #include <cstring>
+#include <string>
+#include <vector>
 #include "usuario.h"
 #include "manager.h"
 using namespace std;
@@ -9,8 +11,195 @@ Manager::Manager(Repositorio* repo) {
     _repo = repo;
 }
 
+bool Manager::buscarCancion(Cancion &cancionBuscada){
+    int opc;
+
+    cout<<"BUSQUEDA DE CANCION"<<endl;
+    cout<<"-------------------"<<endl;
+    cout<<"1.Buscar por nombre"<<endl;
+    cout<<"2. Buscar por ID"<<endl;
+    cout<<"3. Buscar por genero"<<endl; //esta me muestra varias pq hay muchas de un solo genero
+    cout<<"Ingresa una opcion: ";
+    cin>>opc;
+    system("cls");
+
+    switch(opc){
+    case 1:
+        char nombre[40];
+        cout<<"Ingresa el nombre: ";
+        cin.getline(nombre, 40);
+
+        if(buscarCancionPorNombre(nombre, cancionBuscada)){
+            cancionBuscada.mostrarCancion();
+            return true;
+        }
+        else{
+            cout<<"No se encontro resultado.."<<endl;
+            return false;
+        }
+
+    case 2:
+        int id;
+        cout<<"Ingresa el ID: ";
+        cin>>id;
+        if(buscarCancionPorId(id, cancionBuscada)){
+            cancionBuscada.mostrarCancion();
+            return true;
+        }
+        else{
+            cout<<"No se encontro resultado.."<<endl;
+            return false;
+        }
+
+    case 3:
+        int genero;
+        cout<<"Genero";
+        cout<<"1. Pop"<<endl;
+        cout<<"2. Rock"<<endl;
+        cout<<"3. Trap"<<endl;
+        cout<<"4. Hip hop"<<endl;
+        cout<<"5. Rap"<<endl;
+        cout<<"6. Reggaeton"<<endl;
+        cout<<"7. Clasica"<<endl;
+        cout<<"Selecciona el genero: ";
+        cin>>genero;
+
+        vector<Cancion> encontradas=buscarCancionPorGenero(genero);
+
+        if(encontradas.empty()){
+           cout<<"No se encontraron resultados.."<<endl;
+           return false;
+        }
+        else{
+            cancionBuscada=seleccionarCancion(encontradas);
+            return true;
+        }
+    }
+}
+
+bool Manager::buscarCancionPorId(int id, Cancion& cancionEncontrada){
+
+    FILE* pFileCanciones= fopen("canciones.dat", "rb");
+
+    if (pFileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        fclose(pFileCanciones);
+        return false;
+    }
+
+    Cancion c;
+
+    while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
+        if(c.getIDCancion()==id){
+            cancionEncontrada=c;
+            fclose(pFileCanciones);
+            return true;
+        }
+        else{
+            fclose(pFileCanciones);
+            return false;
+        }
+    }
+}
+
+bool Manager::buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontrada){
+
+    FILE* pFileCanciones= fopen("canciones.dat", "rb");
+
+    if (pFileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        fclose(pFileCanciones);
+        return false;
+    }
+
+    Cancion c;
+
+    while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
+        if(strcmp(c.getTitulo(), nombre)==0){
+            cancionEncontrada=c;
+            fclose(pFileCanciones);
+            return true;
+        }
+        else{
+            fclose(pFileCanciones);
+            return false;
+        }
+    }
+}
+
+vector<Cancion> Manager::buscarCancionPorGenero(int genero){
+
+    vector<Cancion> resultados;
+    FILE* pFileCanciones= fopen("canciones.dat", "rb");
+
+    if (pFileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        fclose(pFileCanciones);
+    }
+
+    Cancion c;
+    int indice=0;
+
+    cout<<"Resultados encontrados: "<<endl;
+    while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
+        if(c.getGenero()==genero){
+            indice++;
+            cout<<indice<<") "<<c.getTitulo()<<endl;
+            resultados.push_back(c);
+        }
+    }
+    fclose(pFileCanciones);
+    return resultados;
+}
+
+Cancion Manager::seleccionarCancion(const vector<Cancion> &lista){
+    int seleccion;
+    cout<<"Seleccione una cancion: "<<endl;
+    cin>>seleccion;
+
+    return lista[seleccion-1];
+}
+
 bool seguirArtista();
 bool dejarDeSeguirArtista();
+
+bool Manager::registrarInteraccion(int _idUsuario, int _idCancion, int _tipo, int _idPlaylist){
+    int idGenerado;
+
+    //generamos id de la nueva interaccion
+    idGenerado=generarIdInteraccion();
+
+    //creamos interaccion
+    Interaccion nuevaInt(idGenerado, _idUsuario, _idCancion, _tipo, _idPlaylist);
+
+    //guardar en el disco y la ram
+    if(guardarInteraccionEnDisco(nuevaInt)){
+        _repo->agregarInteraccion(nuevaInt);
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool Manager::guardarInteraccionEnDisco(const Interaccion &nuevaInteraccion){
+    FILE *pFileInteraccion = fopen("interaccion.dat", "ab");
+
+    if(pFileInteraccion==nullptr){
+        cout<<"No se pudo abrir el archivo"<<endl;
+        return false;
+    }
+
+    fwrite(&nuevaInteraccion, sizeof(Interaccion), 1, pFileInteraccion);
+    fclose(pFileInteraccion);
+    return true;
+
+}
+
+int Manager::generarIdInteraccion(){
+    idGenerado++;
+    return idGenerado;
+}
 
 bool Manager::intentarRegistro(int idUsuario, const char* nombre, const char* apellido, const char* dni, const char* mail, const char* telefono){
 
@@ -127,25 +316,58 @@ bool Manager::guardarUsuarioEnArchivo(const Usuario& nuevoUsuario){
     return true;
 
 }
+
 int Manager::buscarInterprete() {
-    // verifica q el repo exista
-    if (!_repo) return -1;
+    
+}
 
+bool Manager::buscarInterpretePorNombre(const char* nombre, Interprete& interpreteEncontrado) {
+        FILE *pFile = fopen("interpretes.dat", "r");
+        
+        if (pFile == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        fclose(pFile);
+    }   
+        Interprete i;
+        
+        while (fread(&i, sizeof(Interprete), 1, pFile)) {
+            if (strcmp(i.getNombre(), nombre) == 0) {
+                interpreteEncontrado = i;
+                fclose(pFile);
+                return true;
+            }
+        }
+        
+        fclose(pFile);
+        return false;
+}
+/*
+vector<Interprete> Manager::buscarInterpretePorGenero(int genero) {
+    vector<Interprete> resultados;
+    FILE* pFile = fopen("interpretes.dat", "rb");
 
-    char nombreBuscado[100];
-    cout << "Ingrese el nombre del interprete: ";
-    cin >> nombreBuscado;
+    if (pFile == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        fclose(pFile);
+    }
 
-    cin.getline(nombreBuscado, 100);
+    Interprete i;
 
-    const auto& lista = _repo->getInterprete();
-
-    for (const auto& interprete : lista) {
-        if (strcmp(interprete.getNombre(), nombreBuscado) == 0) {
-            cout << "Interprete encontrado: " << interprete.getNombre() << endl;
-            return interprete.getIDInterprete();
+    cout << "Interpretes del genero " << genero << ":" << endl;
+    while (fread(&i, sizeof(Interprete), 1, pFile)) {
+        // Suponiendo que Interprete tiene un método getGenero()
+        if (i.getGenero() == genero) {
+            cout << i.getNombre() << endl;
+            resultados.push_back(i);
         }
     }
-    cout << "Interprete no encontrado." << endl;
-    return -1;
+    fclose(pFile);
+    return resultados;  
+} */
+Interprete Manager::seleccionarInterprete(const vector<Interprete> &lista) {
+    int seleccion;
+    cout << "Seleccione un interprete: " << endl;
+    cin >> seleccion;
+
+    return lista[seleccion - 1];
 }

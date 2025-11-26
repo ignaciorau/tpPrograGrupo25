@@ -9,6 +9,7 @@ const char* Interprete::getNombre() const {return nombre;}
 int Interprete::getSuscriptores(){return suscriptores;}
 bool Interprete::getNotificaciones(){return notificaciones;}
 bool Interprete::getEstado(){return estado;}
+int Interprete::getGenero(){return genero;}
 
 void Interprete::setNombre(const char* _nombre){strcpy(nombre, _nombre);}
 void Interprete::setNacionalidad(const char* _nacionalidad){strcpy(nacionalidad, _nacionalidad);}

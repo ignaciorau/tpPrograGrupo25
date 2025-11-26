@@ -8,10 +8,12 @@ private:
     int suscriptores;
     bool notificaciones;
     bool estado;
+    int genero;
 public:
     const int getIDInterprete() const;
     const char* getNombre() const; //no se si hacerlo const a este tmb
     int getSuscriptores();
+    int getGenero();
     bool getNotificaciones();
     bool getEstado();
 

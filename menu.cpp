@@ -4,8 +4,6 @@
 #include "menu.h"
 using namespace std;
 
-void ejecutarOpcion();
-
 Menu::Menu(Manager& _manager) : m(_manager){}
 
 int Menu::pedirOpcion(){
@@ -22,7 +20,7 @@ int Menu::pedirOpcion(){
     }
     else{
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //descarta todos los caracteres que haya en el búfer de entrada hasta encontrar un salto de línea ('\n'),
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //descarta todos los caracteres que haya en el bï¿½fer de entrada hasta encontrar un salto de lï¿½nea ('\n'),
         cout<<"Ingresa una opcion valida"<<endl;
     }
     }
@@ -31,7 +29,6 @@ int Menu::pedirOpcion(){
 void Menu::pedirDatosRegistro(){
     int id;
     char nombre[40], apellido[40], dni[12], telefono[20], mail[60];
-    bool suscriptor;
 
     cout<<"-----Registrate-----"<<endl;
     cout<<"ID: "<<endl;
@@ -87,19 +84,30 @@ bool Menu::manejarMenuInicio(Usuario &usuarioLogueado){
     system("pause");
     system("cls");
 
-    if(opc==1){
+    switch(opc){
+    case 1:
+        {
         bool logueado=pedirDatosLogin(usuarioLogueado);
         system("pause");
         system("cls");
         return logueado;
-    }
-    else if(opc==2){
+        }
+    case 2:
+        {
         pedirDatosRegistro();
         system("pause");
         system("cls");
+        break;
         }
-    else{
+    case 0:
+        {
         cout<<"Gracias por usar nuestra aplicacion!"<<endl;
+        return false;
+        }
+    default:
+        cout<<"Ingresa una opcion valida!"<<endl;
+        system("pause");
+        system("cls");
     }
     }while(opc!=0);
 }
@@ -122,18 +130,16 @@ void Menu::mostrarOpcionesUsuario() {
     cout<<"=========================================="<<endl;
     cout<<"         MENU USUARIO"<<endl;
     cout<<"=========================================="<<endl;
-    cout<<"1. Ver todas las canciones"<<endl;
-    cout<<"2. Reproducir cancion"<<endl;
-    cout<<"3. Buscar canciones"<<endl;
+    cout<<"1. Buscar canciones"<<endl; //me da la opcion de reproducir, likear, skipear o agregar a playlist
+    cout<<"2. Buscar Interprete"<<endl; //luego me da la opcion de suscribirme y de ver sus canciones
+    cout<<"3. Ver todas las canciones"<<endl;
     cout<<"4. Ver mis playlists"<<endl;
     cout<<"5. Crear playlist"<<endl;
-    cout<<"6. Ver mi perfil"<<endl;
-    cout<<"7. Suscribirme a interprete"<<endl;
+    cout<<"6. Ver mi perfil"<<endl; //muestra sus datos
     cout<<"0. Cerrar sesion"<<endl;
     cout<<"=========================================="<<endl;
-
-
 }
+
 void Menu::manejarMenuUsuario(){
     int opc;
     int idCancion;
@@ -145,17 +151,44 @@ void Menu::manejarMenuUsuario(){
 
         switch(opc){
             case 1:
-                // funcion para mostrar todas las canciones
+                // funcion para buscar canciones
+                Cancion cancionElegida;
+
+                if(m.buscarCancion(cancionElegida)){
+                    int accion;
+
+                    cout<<"Que accion quieres realizar?"<<endl;
+                    cout<<"----------------------------"<<endl;
+                    cout<<"1. Reproducir"<<endl;
+                    cout<<"2. Dar like"<<endl;
+                    cout<<"3. Agregar a playlist"<<endl;
+                    cout<<"0. Salir"<<endl;
+                    cout<<"Selecciona una opcion: ";
+                    cin>>accion;
+
+                    switch(accion){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout<<"Ingresa una opcion valida!"<<endl;
+                    }
+                }
+                else{
+                    cout<<"Intenta denuevo."<<endl;
+                }
                 system("pause");
                 break;
             case 2:
-                cout << "Ingrese el ID de la cancion que desea reproducir: ";
-                cin >> idCancion;
                 // misma funcion
                 system("pause");
                 break;
             case 3:
-                //buscar canciones
                 break;
             case 4:
                 // por implementar
@@ -166,9 +199,6 @@ void Menu::manejarMenuUsuario(){
                 break;
             case 6:
                 //ver mi perfil
-                break;
-            case 7:
-                //suscribirme a interprete
                 break;
             case 0:
                 cout<<"Cerrando sesion..."<<endl;
@@ -190,7 +220,7 @@ void Menu::mostrarOpcionesAdmin () {
     cout<<"6. Registrar interprete"<<endl;
     cout<<"7. Eliminar interprete"<<endl;
     cout<<"8. Estadisticas"<<endl;
-    cout<<"9. Ver todos los usuarios"<<endl;
+    cout<<"9. Ver todos los usuarios"<<endl; //podra dar o quitar admin a usuarios
     cout<<"0. Cerrar sesion"<<endl;
     cout<<"=========================================="<<endl;
 }

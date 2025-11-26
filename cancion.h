@@ -10,6 +10,7 @@ private:
     int reproducciones;
     int likes;
     bool estado;
+    char nombreInterprete[50];
 
 public:
     int getIDCancion();
@@ -19,12 +20,14 @@ public:
     int getReproducciones();
     int getLikes();
     bool getEstado();
+    const char* getNombreInterprete();
 
     void setTitulo(const char* _titulo);
     void setIDInterprete(int _IDInterprete);
     void setGenero(int _genero);
     void setEstado(int _estado);
-
+    void Cancion::setNombreInterprete(const char* nombre);
+    
     void cargarCancion();
     void mostrarCancion();
 

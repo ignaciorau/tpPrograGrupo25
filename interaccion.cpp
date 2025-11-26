@@ -4,8 +4,17 @@
 
 using namespace std;
 
+//constructor
+Interaccion::Interaccion(int _idInteraccion, int _idUsuario, int _idCancion, int _tipo, int _idPlaylist){
+    idInteraccion=_idInteraccion;
+    idUsuario=_idUsuario;
+    idCancion=_idCancion;
+    tipo=_tipo;
+    idPlaylist=_idPlaylist;
+}
+
 // Getters
-long Interaccion::getID() {return id;} 
+long Interaccion::getID() {return idInteraccion;}
 int Interaccion::getIDUsuario() {return idUsuario;}
 int Interaccion::getIDCancion() {return idCancion;}
 int Interaccion::getTipo() {return tipo;}
@@ -13,7 +22,7 @@ int Interaccion::getIDPlaylist() {return idPlaylist;}
 bool Interaccion::getEstado() {return estado;}
 
 // setters
-void Interaccion::setID(int _id) {id = _id;}
+void Interaccion::setID(int _id) {idInteraccion = _id;}
 void Interaccion::setIDUsuario(int _idUsuario) {idUsuario = _idUsuario;}
 void Interaccion::setIDCancion(int _idCancion) {idCancion = _idCancion;}
 void Interaccion::setTipo(int _tipo) {tipo = _tipo;}
@@ -24,7 +33,7 @@ void Interaccion::setEstado(bool _estado) {estado = _estado;}
 void Interaccion::cargar() {
     cout << "Nueva interaccion" << endl;
     cout << "ID: ";
-    cin >> id;
+    cin >> idInteraccion;
     cout << "ID usuario: ";
     cin >> idUsuario;
     cout << "ID cancion: ";
@@ -46,7 +55,7 @@ void Interaccion::cargar() {
 
 void Interaccion::mostrar() {
     cout << "---------------------------------------------------" << endl;
-    cout << "ID Interaccion: " << id << endl;
+    cout << "ID Interaccion: " << idInteraccion << endl;
     cout << "Usuario: " << idUsuario << endl;
     cout << "Cancion: " << idCancion << endl;
 
@@ -58,24 +67,23 @@ void Interaccion::mostrar() {
         case 2:
         cout << "Me gusta" << endl;
         break;
-        case 3: 
+        case 3:
         cout << "Cancion skipeada" << endl;
         break;
         case 4:
         cout << "Agregada a playlist: " << idPlaylist << endl;
         break;
-        case 5: 
+        case 5:
         cout << "Eliminado de Playlist: " << idPlaylist << endl;
-        break;
-        default:
+        defautl:
         cout << "Interaccion desconocida." << endl;
         cout << "Tipo (" << tipo << ")" << endl;
         break;
     }
     /* viendo q hacer con el estado
-    cout << "Estado: " 
+    cout << "Estado: "
     */
 
     // aca irian los metodos de escribir disco y leerlos, no se si los vamos a usar o como
     // los dejo para despues
-};
+}
