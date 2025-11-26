@@ -317,31 +317,57 @@ bool Manager::guardarUsuarioEnArchivo(const Usuario& nuevoUsuario){
 
 }
 
-int Manager::buscarInterprete() {
-    
+bool Manager::buscarInterprete(Interprete &interpreteBuscado) {
+    int opc;
+    cout << "BUSQUEDA DE INTERPRETE" << endl;
+    cout << "-------------------" << endl;
+    cout << "1.Buscar por nombre" << endl;
+    cout << "Ingresa una opcion: ";
+    cin >> opc;
+
+    switch (opc) {
+    case 1:
+        char nombre[30];
+        cout << "Ingresa el nombre: ";
+        cin.ignore();
+        cin.getline(nombre, 30);
+
+        if (buscarInterpretePorNombre(nombre, interpreteBuscado)) {
+            cout << "Interprete encontrado:" << endl;
+            interpreteBuscado.mostrarInterprete();
+            return true;
+        } else {
+            cout << "No se encontro resultado.." << endl;
+            return false;
+        }
+    }
+
+    return false;
 }
 
+
 bool Manager::buscarInterpretePorNombre(const char* nombre, Interprete& interpreteEncontrado) {
-        FILE *pFile = fopen("interpretes.dat", "r");
-        
-        if (pFile == nullptr) {
+    FILE *pFile = fopen("interpretes.dat", "rb");
+    if (!pFile) {
         cout << "No se pudo abrir el archivo." << endl;
-        fclose(pFile);
-    }   
-        Interprete i;
-        
-        while (fread(&i, sizeof(Interprete), 1, pFile)) {
-            if (strcmp(i.getNombre(), nombre) == 0) {
-                interpreteEncontrado = i;
-                fclose(pFile);
-                return true;
-            }
-        }
-        
-        fclose(pFile);
         return false;
+    }
+
+    Interprete i;
+
+    while (fread(&i, sizeof(Interprete), 1, pFile) == 1) {
+        if (strcmp(i.getNombre(), nombre) == 0) {
+            interpreteEncontrado = i;
+            fclose(pFile);
+            return true;
+        }
+    }
+
+    fclose(pFile);
+    return false;
 }
-/*
+
+/*  
 vector<Interprete> Manager::buscarInterpretePorGenero(int genero) {
     vector<Interprete> resultados;
     FILE* pFile = fopen("interpretes.dat", "rb");
