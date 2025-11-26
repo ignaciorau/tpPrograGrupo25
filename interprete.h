@@ -9,8 +9,8 @@ private:
     bool notificaciones;
     bool estado;
 public:
-    int getIDInterprete();
-    char* getNombre(); //no se si hacerlo const a este tmb
+    const int getIDInterprete() const;
+    const char* getNombre() const; //no se si hacerlo const a este tmb
     int getSuscriptores();
     bool getNotificaciones();
     bool getEstado();

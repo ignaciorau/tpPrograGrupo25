@@ -18,4 +18,6 @@ public:
     //el primer const es pq devuelve un constante, el segundo es para que la funcion getUsuario no modifique ningun atributo
     const std::vector<Usuario>& getUsuarios() const;
     void agregarUsuario(const Usuario& nuevoUsuario);
+    const std::vector<Interprete>& getInterpretes() const;
+    void agregarInterprete(const Interprete& nuevoInterprete);
 };

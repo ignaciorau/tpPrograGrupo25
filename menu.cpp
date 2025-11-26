@@ -22,7 +22,7 @@ int Menu::pedirOpcion(){
     }
     else{
         std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //descarta todos los caracteres que haya en el búfer de entrada hasta encontrar un salto de línea ('\n'),
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //descarta todos los caracteres que haya en el bï¿½fer de entrada hasta encontrar un salto de lï¿½nea ('\n'),
         cout<<"Ingresa una opcion valida"<<endl;
     }
     }
@@ -122,13 +122,11 @@ void Menu::mostrarOpcionesUsuario() {
     cout<<"=========================================="<<endl;
     cout<<"         MENU USUARIO"<<endl;
     cout<<"=========================================="<<endl;
-    cout<<"1. Ver todas las canciones"<<endl;
-    cout<<"2. Reproducir cancion"<<endl;
-    cout<<"3. Buscar canciones"<<endl;
-    cout<<"4. Ver mis playlists"<<endl;
-    cout<<"5. Crear playlist"<<endl;
-    cout<<"6. Ver mi perfil"<<endl;
-    cout<<"7. Suscribirme a interprete"<<endl;
+    cout<<"1. Buscar canciones"<<endl;
+    cout<<"2. Buscar interprete"<<endl;
+    cout<<"3. Ver todas las canciones"<<endl;
+    cout<<"4. Crear playlist"<<endl;
+    cout<<"5. Ver mi perfil"<<endl;
     cout<<"0. Cerrar sesion"<<endl;
     cout<<"=========================================="<<endl;
 
@@ -145,17 +143,13 @@ void Menu::manejarMenuUsuario(){
 
         switch(opc){
             case 1:
-                // funcion para mostrar todas las canciones
                 system("pause");
                 break;
             case 2:
-                cout << "Ingrese el ID de la cancion que desea reproducir: ";
-                cin >> idCancion;
                 // misma funcion
                 system("pause");
                 break;
             case 3:
-                //buscar canciones
                 break;
             case 4:
                 // por implementar
@@ -166,9 +160,6 @@ void Menu::manejarMenuUsuario(){
                 break;
             case 6:
                 //ver mi perfil
-                break;
-            case 7:
-                //suscribirme a interprete
                 break;
             case 0:
                 cout<<"Cerrando sesion..."<<endl;

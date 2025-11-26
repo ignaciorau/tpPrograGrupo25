@@ -125,5 +125,27 @@ bool Manager::guardarUsuarioEnArchivo(const Usuario& nuevoUsuario){
     fwrite(&nuevoUsuario, sizeof(Usuario), 1, pFileUsuarios);
     fclose(pFileUsuarios);
     return true;
+}
 
+int Manager::buscarInterprete() {
+    // verifica q el repo exista
+    if (!_repo) return -1;
+
+
+    char nombreBuscado[100];
+    cout << "Ingrese el nombre del interprete: ";
+    cin >> nombreBuscado;
+
+    cin.getline(nombreBuscado, 100);
+
+    const auto& lista = _repo->getInterpretes();
+
+    for (const auto& interprete : lista) {
+        if (strcmp(interprete.getNombre(), nombreBuscado) == 0) {
+            cout << "Interprete encontrado: " << interprete.getNombre() << endl;
+            return interprete.getIDInterprete();
+        }
+    }
+    cout << "Interprete no encontrado." << endl;
+    return -1;
 }
