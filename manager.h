@@ -11,10 +11,20 @@ public:
     // constructor
     Manager(Repositorio* repo = nullptr);
     //son booleanas pq devuelven true o false si la operacion se llevo a cabo con exito
+    //usuario
     bool intentarRegistro(int idUsuario, const char* nombre, const char* apellido, const char* dni, const char* mail, const char* telefono);
     bool intentarLogin(int idUsuario, const char* mail, Usuario &usuarioLogueado);
     bool cargarDatosDesdeArchivos();
     bool guardarUsuarioEnArchivo(const Usuario& nuevoUsuario);
+
+    //interaccion
     bool guardarInteraccionEnDisco(const Interaccion &nuevaInteraccion);
     bool registrarInteraccion(int _idUsuario, int _idCancion, int _tipo, int _idPlaylist);
+
+    //canciones
+    bool buscarCancion(Cancion &cancionBuscada);
+    bool buscarCancionPorId(int id, Cancion& cancionEncontrada);
+    bool buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontrada);
+    vector<Cancion>  buscarCancionPorGenero(int genero);
+    Cancion seleccionarCancion(const vector<Cancion> &lista);
 };
