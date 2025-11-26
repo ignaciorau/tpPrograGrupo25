@@ -4,8 +4,6 @@
 #include "menu.h"
 using namespace std;
 
-void ejecutarOpcion();
-
 Menu::Menu(Manager& _manager) : m(_manager){}
 
 int Menu::pedirOpcion(){
@@ -31,7 +29,6 @@ int Menu::pedirOpcion(){
 void Menu::pedirDatosRegistro(){
     int id;
     char nombre[40], apellido[40], dni[12], telefono[20], mail[60];
-    bool suscriptor;
 
     cout<<"-----Registrate-----"<<endl;
     cout<<"ID: "<<endl;
@@ -87,19 +84,30 @@ bool Menu::manejarMenuInicio(Usuario &usuarioLogueado){
     system("pause");
     system("cls");
 
-    if(opc==1){
+    switch(opc){
+    case 1:
+        {
         bool logueado=pedirDatosLogin(usuarioLogueado);
         system("pause");
         system("cls");
         return logueado;
-    }
-    else if(opc==2){
+        }
+    case 2:
+        {
         pedirDatosRegistro();
         system("pause");
         system("cls");
+        break;
         }
-    else{
+    case 0:
+        {
         cout<<"Gracias por usar nuestra aplicacion!"<<endl;
+        return false;
+        }
+    default:
+        cout<<"Ingresa una opcion valida!"<<endl;
+        system("pause");
+        system("cls");
     }
     }while(opc!=0);
 }
@@ -122,16 +130,24 @@ void Menu::mostrarOpcionesUsuario() {
     cout<<"=========================================="<<endl;
     cout<<"         MENU USUARIO"<<endl;
     cout<<"=========================================="<<endl;
+<<<<<<< HEAD
     cout<<"1. Buscar canciones"<<endl;
     cout<<"2. Buscar interprete"<<endl;
     cout<<"3. Ver todas las canciones"<<endl;
     cout<<"4. Crear playlist"<<endl;
     cout<<"5. Ver mi perfil"<<endl;
+=======
+    cout<<"1. Buscar canciones"<<endl; //me da la opcion de reproducir, likear, skipear o agregar a playlist
+    cout<<"2. Buscar Interprete"<<endl; //luego me da la opcion de suscribirme y de ver sus canciones
+    cout<<"3. Ver todas las canciones"<<endl;
+    cout<<"4. Ver mis playlists"<<endl;
+    cout<<"5. Crear playlist"<<endl;
+    cout<<"6. Ver mi perfil"<<endl; //muestra sus datos
+>>>>>>> bb57a5445eb30141b33259ec9c69e649514c4b41
     cout<<"0. Cerrar sesion"<<endl;
     cout<<"=========================================="<<endl;
-
-
 }
+
 void Menu::manejarMenuUsuario(){
     int opc;
     int idCancion;
@@ -143,6 +159,40 @@ void Menu::manejarMenuUsuario(){
 
         switch(opc){
             case 1:
+<<<<<<< HEAD
+=======
+                // funcion para buscar canciones
+                Cancion cancionElegida;
+
+                if(m.buscarCancion(cancionElegida)){
+                    int accion;
+
+                    cout<<"Que accion quieres realizar?"<<endl;
+                    cout<<"----------------------------"<<endl;
+                    cout<<"1. Reproducir"<<endl;
+                    cout<<"2. Dar like"<<endl;
+                    cout<<"3. Agregar a playlist"<<endl;
+                    cout<<"0. Salir"<<endl;
+                    cout<<"Selecciona una opcion: ";
+                    cin>>accion;
+
+                    switch(accion){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout<<"Ingresa una opcion valida!"<<endl;
+                    }
+                }
+                else{
+                    cout<<"Intenta denuevo."<<endl;
+                }
+>>>>>>> bb57a5445eb30141b33259ec9c69e649514c4b41
                 system("pause");
                 break;
             case 2:
@@ -181,7 +231,7 @@ void Menu::mostrarOpcionesAdmin () {
     cout<<"6. Registrar interprete"<<endl;
     cout<<"7. Eliminar interprete"<<endl;
     cout<<"8. Estadisticas"<<endl;
-    cout<<"9. Ver todos los usuarios"<<endl;
+    cout<<"9. Ver todos los usuarios"<<endl; //podra dar o quitar admin a usuarios
     cout<<"0. Cerrar sesion"<<endl;
     cout<<"=========================================="<<endl;
 }
