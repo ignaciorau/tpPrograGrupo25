@@ -248,12 +248,22 @@ void Menu::manejarMenuAdmin(){
 
         switch(opc){
             case 1:
-                // mostrar canciones
+                if(m.agregarCancion()){
+                    cout<<"La cancion se agrego correctamente!"<<endl;
+                }
+                else{
+                    cout<<"No se agrego la cancion."<<endl;
+                }
+
                 system("pause");
                 break;
-
             case 2:
-                // agregar cancion
+                if(m.eliminarCancion()){
+                    cout<<"La cancion se elimino correctamente!"<<endl;
+                }
+                else{
+                    cout<<"No se elimino la cancion."<<endl;
+                }
                 system("pause");
                 break;
 
