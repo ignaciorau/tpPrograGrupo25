@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstring>
 #include <string>
+#include <limits>
 #include <vector>
 #include "usuario.h"
 #include "manager.h"

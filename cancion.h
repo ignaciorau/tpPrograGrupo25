@@ -13,6 +13,9 @@ private:
     char nombreInterprete[50];
 
 public:
+    Cancion();
+    Cancion(int id, const char* t, int idInt, int gen);
+
     int getIDCancion();
     const char* getTitulo(); //nose si hacerlo const o no
     int getIDInterprete();
@@ -26,7 +29,7 @@ public:
     void setIDInterprete(int _IDInterprete);
     void setGenero(int _genero);
     void setEstado(int _estado);
-    void Cancion::setNombreInterprete(const char* nombre);
+    void setNombreInterprete(const char* _nombreInterprete);
     
     void cargarCancion();
     void mostrarCancion();

@@ -18,7 +18,7 @@ void Cancion::setTitulo(const char* _titulo){strcpy(titulo, _titulo);}
 void Cancion::setIDInterprete(int _IDInterprete){IDInterprete=_IDInterprete;}
 void Cancion::setGenero(int _genero){genero=_genero;}
 void Cancion::setEstado(int _estado){estado=_estado;}
-void Cancion::setNombreInterprete(const char* nombre) {return nombre;};
+void Cancion::setNombreInterprete(const char* _nombreInterprete) {strcpy(nombreInterprete, _nombreInterprete);}
 
 void cargarCancion();
 void mostrarCancion();
