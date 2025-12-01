@@ -6,7 +6,7 @@ using namespace std;
 
 int Cancion::getIDCancion(){return idCancion;}
 
-char* Cancion::getTitulo(){return titulo;}
+const char* Cancion::getTitulo(){return titulo;}
 int Cancion::getIDInterprete(){return IDInterprete;}
 int Cancion::getGenero(){return genero;}
 int Cancion::getReproducciones(){return reproducciones;}
@@ -22,4 +22,5 @@ void Cancion::setNombreInterprete(const char* nombre) {return nombre;};
 
 void cargarCancion();
 void mostrarCancion();
+
 
