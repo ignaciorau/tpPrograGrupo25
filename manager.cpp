@@ -11,6 +11,150 @@ Manager::Manager(Repositorio* repo) {
     _repo = repo;
 }
 
+bool Manager::eliminarCancion(){
+    char nombre[40];
+    int pos;
+    cout<<"ELIMINAR CANCION"<<endl;
+    cout<<"Ingresa el nombre de la cancion: ";
+
+    //limpio el buffer
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cin.getline(nombre, 40);
+
+    FILE* pfileCanciones=fopen("canciones.dat", "rb+");
+
+    if(pfileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        return false;
+    }
+
+    Cancion c;
+    char respuesta;
+
+    while(fread(&c, sizeof(c), 1, pfileCanciones)){
+
+        //buscamos cancion
+        if(strcmp(c.getTitulo(), nombre)==0){
+
+            cout<<"Tarea a eliminar: "<<endl;
+            c.mostrarCancion();
+            cout<<"Estas seguro de que quieres eliminarla? (S=si/N=no)"<<endl;
+            cin>>respuesta;
+
+            if(respuesta=='S' || respuesta=='s'){
+
+                //cambio el estado
+                c.setEstado(false);
+
+                //vuelvo un registro atras y lo sobreescribo
+                fseek(pfileCanciones, -sizeof(Cancion), SEEK_CUR);
+
+                fwrite(&c, sizeof(Cancion), 1, pfileCanciones);
+
+                fclose(pfileCanciones);
+                return true;
+            }
+            else{
+                fclose(pfileCanciones);
+                return false;
+            }
+        }
+    }
+    cout<<"No se encontro la cancion."<<endl;
+    fclose(pfileCanciones);
+    return false;
+}
+
+Cancion Manager::pedirDatosCancion(){
+    char titulo[40];
+    int idCancion, IDInterprete, genero;
+
+    cout<<"NUEVA CANCION"<<endl;
+    cout<<"Ingresa el titulo: ";
+    //limpiamos el buffer
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cin.getline(titulo, 40);
+    cout<<"Ingresa el id de cancion: ";
+    cin>>idCancion;
+
+    if(!verificarDatosCancion(idCancion, titulo)){
+        return Cancion(); //devuelve un objeto vacio si es q se repiten los datos
+    }
+
+    cout<<"Ingresa el id de interprete: ";
+    cin>>IDInterprete;
+    cout<<"Generos!!"<<endl;
+    cout<<"1. Pop"<<endl;
+    cout<<"2. Rock"<<endl;
+    cout<<"3. Trap"<<endl;
+    cout<<"4. Hip hop"<<endl;
+    cout<<"5. Rap"<<endl;
+    cout<<"6. Reggaeton"<<endl;
+    cout<<"7. Clasica"<<endl;
+    cout<<"Ingresa el genero: ";
+    cin>>genero;
+
+    //si siguio el flujo significa q no se repite, creo un objeto temporal ya q solo lo necesito para retornalo
+    //por lo tanto no hace falta ponerle nombre
+    return Cancion(idCancion, titulo, IDInterprete, genero);
+}
+
+bool Manager::verificarDatosCancion(int idCancion, const char* titulo){
+    FILE* pfileCanciones=fopen("canciones.dat", "rb");
+
+    if(pfileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        return false;
+    }
+
+    Cancion c;
+
+    while(fread(&c, sizeof(c), 1, pfileCanciones)){
+
+        //verificar ID
+        if(c.getIDCancion()==idCancion){
+            cout<<"Ya existe una cancion con ese id! "<<endl;
+
+            fclose(pfileCanciones);
+            return false;
+        }
+
+        //verificar TITULO
+        if(strcmp(c.getTitulo(), titulo)==0){
+            cout<<"Ya existe una cancion con ese titulo! "<<endl;
+
+            fclose(pfileCanciones);
+            return false;
+        }
+
+    }
+    fclose(pfileCanciones);
+    return true;
+}
+
+bool Manager::agregarCancion(){
+    //"ab" agrega en el archivo, si el archivo no existe, lo crea
+    FILE* pFileCanciones=fopen("canciones.dat", "ab");
+
+    if (pFileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+        return false;
+    }
+
+    //pedir datos y crear objeto cancion
+    Cancion nuevaCancion=pedirDatosCancion();
+
+    //si el id es 0 no guardamos la cancion en archivo
+    if(nuevaCancion.getIDCancion()==0){
+        return false;
+    }
+
+    //si llega hasta aca se registra la cancion en archivo
+    fwrite(&nuevaCancion, sizeof(Cancion), 1, pFileCanciones);
+    fclose(pFileCanciones);
+    return true;
+}
+
 bool Manager::buscarCancion(Cancion &cancionBuscada){
     int opc;
 
@@ -27,6 +171,9 @@ bool Manager::buscarCancion(Cancion &cancionBuscada){
     case 1:
         char nombre[40];
         cout<<"Ingresa el nombre: ";
+
+        //limpio el buffer
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cin.getline(nombre, 40);
 
         if(buscarCancionPorNombre(nombre, cancionBuscada)){
@@ -53,7 +200,7 @@ bool Manager::buscarCancion(Cancion &cancionBuscada){
 
     case 3:
         int genero;
-        cout<<"Genero";
+        cout<<"Genero"<<endl;
         cout<<"1. Pop"<<endl;
         cout<<"2. Rock"<<endl;
         cout<<"3. Trap"<<endl;
@@ -83,23 +230,20 @@ bool Manager::buscarCancionPorId(int id, Cancion& cancionEncontrada){
 
     if (pFileCanciones == nullptr) {
         cout << "No se pudo abrir el archivo." << endl;
-        fclose(pFileCanciones);
         return false;
     }
 
     Cancion c;
 
     while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
-        if(c.getIDCancion()==id){
-            cancionEncontrada=c;
-            fclose(pFileCanciones);
-            return true;
+        if(c.getIDCancion()==id && c.getEstado()==true){
+                cancionEncontrada=c;
+                fclose(pFileCanciones);
+                return true;
+            }
         }
-        else{
-            fclose(pFileCanciones);
-            return false;
-        }
-    }
+    fclose(pFileCanciones);
+    return false;
 }
 
 bool Manager::buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontrada){
@@ -108,23 +252,20 @@ bool Manager::buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontr
 
     if (pFileCanciones == nullptr) {
         cout << "No se pudo abrir el archivo." << endl;
-        fclose(pFileCanciones);
         return false;
     }
 
     Cancion c;
 
     while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
-        if(strcmp(c.getTitulo(), nombre)==0){
-            cancionEncontrada=c;
-            fclose(pFileCanciones);
-            return true;
+        if(strcmp(c.getTitulo(), nombre)==0 && c.getEstado()==true){
+                cancionEncontrada=c;
+                fclose(pFileCanciones);
+                return true;
+            }
         }
-        else{
             fclose(pFileCanciones);
             return false;
-        }
-    }
 }
 
 vector<Cancion> Manager::buscarCancionPorGenero(int genero){
@@ -134,7 +275,6 @@ vector<Cancion> Manager::buscarCancionPorGenero(int genero){
 
     if (pFileCanciones == nullptr) {
         cout << "No se pudo abrir el archivo." << endl;
-        fclose(pFileCanciones);
     }
 
     Cancion c;
@@ -142,7 +282,7 @@ vector<Cancion> Manager::buscarCancionPorGenero(int genero){
 
     cout<<"Resultados encontrados: "<<endl;
     while(fread(&c, sizeof(Cancion), 1, pFileCanciones)){
-        if(c.getGenero()==genero){
+        if(c.getGenero()==genero && c.getEstado()==true){
             indice++;
             cout<<indice<<") "<<c.getTitulo()<<endl;
             resultados.push_back(c);
@@ -396,4 +536,5 @@ Interprete Manager::seleccionarInterprete(const vector<Interprete> &lista) {
     cin >> seleccion;
 
     return lista[seleccion - 1];
+
 }
