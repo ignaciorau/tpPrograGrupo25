@@ -14,7 +14,7 @@ private:
 
 public:
     int getIDCancion();
-    char* getTitulo(); //nose si hacerlo const o no
+    const char* getTitulo(); //nose si hacerlo const o no
     int getIDInterprete();
     int getGenero();
     int getReproducciones();
@@ -33,4 +33,5 @@ public:
 
     bool escribirDisco(int pos); //nose si vamos a usar estas funciones
     bool leerDisco(int pos);
+
 };
