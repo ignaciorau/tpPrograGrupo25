@@ -151,6 +151,7 @@ void Menu::manejarMenuUsuario(){
 
         switch(opc){
             case 1:
+                {
                 // funcion para buscar canciones
                 Cancion cancionElegida;
 
@@ -162,7 +163,7 @@ void Menu::manejarMenuUsuario(){
                     cout<<"1. Reproducir"<<endl;
                     cout<<"2. Dar like"<<endl;
                     cout<<"3. Agregar a playlist"<<endl;
-                    cout<<"0. Salir"<<endl;
+                    cout<<"0. Volver"<<endl;
                     cout<<"Selecciona una opcion: ";
                     cin>>accion;
 
@@ -174,6 +175,7 @@ void Menu::manejarMenuUsuario(){
                     case 3:
                         break;
                     case 0:
+                        system("cls");
                         break;
                     default:
                         cout<<"Ingresa una opcion valida!"<<endl;
@@ -181,14 +183,20 @@ void Menu::manejarMenuUsuario(){
                 }
                 else{
                     cout<<"Intenta denuevo."<<endl;
+                    system("pause");
+                    system("cls");
                 }
-                system("pause");
                 break;
-            case 2:
+        }
+            case 2:{
+                cout << "Ingrese el ID de la cancion que desea reproducir: ";
+                cin >> idCancion;
                 // misma funcion
                 system("pause");
                 break;
+            }
             case 3:
+                //buscar canciones
                 break;
             case 4:
                 // por implementar
@@ -200,6 +208,9 @@ void Menu::manejarMenuUsuario(){
             case 6:
                 //ver mi perfil
                 break;
+            case 7:
+                //suscribirme a interprete
+                break;
             case 0:
                 cout<<"Cerrando sesion..."<<endl;
                 break;
@@ -208,6 +219,7 @@ void Menu::manejarMenuUsuario(){
         }
     }while(opc!=0);
 }
+
 void Menu::mostrarOpcionesAdmin () {
     cout<<"=========================================="<<endl;
     cout<<"         MENU ADMINISTRADOR"<<endl;
@@ -217,7 +229,7 @@ void Menu::mostrarOpcionesAdmin () {
     cout<<"3. Modificar cancion"<<endl;
     cout<<"4. Ver todas las canciones"<<endl;
     cout<<"5. Ver todos los interpretes"<<endl;
-    cout<<"6. Registrar interprete"<<endl;
+    cout<<"6. Agregar interprete"<<endl;
     cout<<"7. Eliminar interprete"<<endl;
     cout<<"8. Estadisticas"<<endl;
     cout<<"9. Ver todos los usuarios"<<endl; //podra dar o quitar admin a usuarios
@@ -225,76 +237,82 @@ void Menu::mostrarOpcionesAdmin () {
     cout<<"=========================================="<<endl;
 }
 
-void Menu::manejarMenuAdmin(){
+void Menu::manejarMenuUsuario(){
     int opc;
-    int id;
-
+    int idCancion;
     do{
-        mostrarOpcionesAdmin();
-        opc = pedirOpcion();
+        mostrarOpcionesUsuario();
+        opc=pedirOpcion();
+        system("pause");
         system("cls");
 
         switch(opc){
             case 1:
-                // mostrar canciones
-                system("pause");
-                break;
+                {
+                // funcion para buscar canciones
+                Cancion cancionElegida;
 
-            case 2:
-                // agregar cancion
-                system("pause");
-                break;
+                if(m.buscarCancion(cancionElegida)){
+                    int accion;
 
-            case 3:
-                cout<<"Ingrese ID de cancion a eliminar: ";
-                cin>>id;
-                // eliminar cancion
-                system("pause");
-                break;
+                    cout<<"Que accion quieres realizar?"<<endl;
+                    cout<<"----------------------------"<<endl;
+                    cout<<"1. Reproducir"<<endl;
+                    cout<<"2. Dar like"<<endl;
+                    cout<<"3. Agregar a playlist"<<endl;
+                    cout<<"0. Volver"<<endl;
+                    cout<<"Selecciona una opcion: ";
+                    cin>>accion;
 
-            case 4:
-                // funcion que permita cambiarle el nombre por ejemplo
-                cout<<"Modificar cancion"<<endl;
-                system("pause");
-                break;
-
-            case 5:
-                // muestra todos los interpretes
-                system("pause");
-                break;
-
-            case 6:
-                // registra nuevo interprete
-                system("pause");
-                break;
-
-            case 7:
-                // eliminar interprete
-                system("pause");
-                break;
-
-            case 8:
-                // estadisticas de reproduccion
-                system("pause");
-                break;
-
-            case 9:
-                // muestra todos los usuarios registrados
-                system("pause");
-                break;
-
-            case 0:
-                cout<<"Cerrando sesion..."<<endl;
-                // funcion cerrar sesion
-                system("pause");
-                break;
-
-            default:
-                cout<<"Opcion invalida!"<<endl;
-                system("pause");
+                    switch(accion){
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 0:
+                        system("cls");
+                        break;
+                    default:
+                        cout<<"Ingresa una opcion valida!"<<endl;
+                    }
+                }
+                else{
+                    cout<<"Intenta denuevo."<<endl;
+                    system("pause");
+                    system("cls");
+                }
                 break;
         }
-        system("cls");
-
+            case 2:{
+                cout << "Ingrese el ID de la cancion que desea reproducir: ";
+                cin >> idCancion;
+                // misma funcion
+                system("pause");
+                break;
+            }
+            case 3:
+                //buscar canciones
+                break;
+            case 4:
+                // por implementar
+                system("pause");
+                break;
+            case 5:
+                //crear playlist
+                break;
+            case 6:
+                //ver mi perfil
+                break;
+            case 7:
+                //suscribirme a interprete
+                break;
+            case 0:
+                cout<<"Cerrando sesion..."<<endl;
+                break;
+            default:
+                cout<<"Opcion no valida, intente de nuevo"<<endl;
+        }
     }while(opc!=0);
 }
