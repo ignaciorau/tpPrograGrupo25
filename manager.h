@@ -23,14 +23,19 @@ public:
     bool registrarInteraccion(int _idUsuario, int _idCancion, int _tipo, int _idPlaylist);
 
     //canciones
+    bool agregarCancion();
+    bool eliminarCancion();
     bool buscarCancion(Cancion &cancionBuscada);
     bool buscarCancionPorId(int id, Cancion& cancionEncontrada);
     bool buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontrada);
     vector<Cancion>  buscarCancionPorGenero(int genero);
     Cancion seleccionarCancion(const vector<Cancion> &lista);
+    Cancion pedirDatosCancion();
+    bool verificarDatosCancion(int idCancion, const char* titulo);
 
     //interprete
     bool buscarInterprete(Interprete &interpreteEncontrado);
     bool buscarInterpretePorNombre(const char* nombre, Interprete& interpreteEncontrado);
     Interprete seleccionarInterprete(const vector<Interprete> &lista);
 };
+
