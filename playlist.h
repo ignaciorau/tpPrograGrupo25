@@ -14,11 +14,11 @@ class Playlist {
 
    public:
    // getters
-   int getID();
-   std::string getNombre();
-   int getIDUsuario();
-   bool getEstado();
-   int getCantidadCanciones();
+     int getID() const;
+    std::string getNombre() const;
+    int getIDUsuario() const;
+    bool getEstado() const;
+    int getCantidadCanciones() const;
 
    // setters
    void setID(int _id);
@@ -31,4 +31,6 @@ class Playlist {
 
    // bool escribirDisco();
    // bool leerDisco();
+   void agregarCancion(const Cancion& c);
+    const std::vector<Cancion>& getCanciones() const;
 };

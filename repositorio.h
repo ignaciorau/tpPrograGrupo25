@@ -6,23 +6,29 @@
 #include "interaccion.h"
 #include "playlist.h"
 
-class Repositorio{
+class Repositorio {
 
 private:
-std::vector<Usuario> _usuarios;
-std::vector<Interprete> _interpretes;
-std::vector<Cancion> _canciones;
-std::vector<Interaccion> _interacciones;
-std::vector<Playlist> _playlists;
+    std::vector<Usuario> _usuarios;
+    std::vector<Interprete> _interpretes;
+    std::vector<Cancion> _canciones;
+    std::vector<Interaccion> _interacciones;
+    std::vector<Playlist> _playlists;
+
 public:
-    //el primer const es pq devuelve un constante, el segundo es para que la funcion getUsuario no modifique ningun atributo
+    // USUARIOS
     const std::vector<Usuario>& getUsuarios() const;
     void agregarUsuario(const Usuario& nuevoUsuario);
-    void agregarInteraccion(const Interaccion& nuevaInteraccion);
 
+    // INTERPRETES
     const std::vector<Interprete>& getInterpretes() const;
     void agregarInterprete(const Interprete& nuevoInterprete);
+
+    // PLAYLISTS
+    const std::vector<Playlist>& getPlaylists() const;
+    std::vector<Playlist>& getPlaylists();   // versión no-const para modificar
+    void agregarPlaylist(const Playlist& nuevaPlaylist);
+
+    // INTERACCIONES
     void agregarInteraccion(const Interaccion& nuevaInteraccion);
-
 };
-

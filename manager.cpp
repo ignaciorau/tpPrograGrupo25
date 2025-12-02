@@ -508,7 +508,7 @@ bool Manager::buscarInterpretePorNombre(const char* nombre, Interprete& interpre
     return false;
 }
 
-/*  
+/*
 vector<Interprete> Manager::buscarInterpretePorGenero(int genero) {
     vector<Interprete> resultados;
     FILE* pFile = fopen("interpretes.dat", "rb");
@@ -529,7 +529,7 @@ vector<Interprete> Manager::buscarInterpretePorGenero(int genero) {
         }
     }
     fclose(pFile);
-    return resultados;  
+    return resultados;
 } */
 Interprete Manager::seleccionarInterprete(const vector<Interprete> &lista) {
     int seleccion;
@@ -538,4 +538,89 @@ Interprete Manager::seleccionarInterprete(const vector<Interprete> &lista) {
 
     return lista[seleccion - 1];
 
+}
+std::vector<Playlist> Manager::obtenerPlaylistsDeUsuario(int idUsuario) {
+    std::vector<Playlist> resultado;
+
+    if (_repo == nullptr) return resultado;
+
+    const std::vector<Playlist>& todas = _repo->getPlaylists();
+
+    for (const auto& p : todas) {
+        if (p.getIDUsuario() == idUsuario && p.getEstado()) {
+            resultado.push_back(p);
+        }
+    }
+
+    return resultado;
+}
+bool Manager::crearPlaylist(Usuario &usuarioLogueado) {
+    if (_repo == nullptr) return false;
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::string nombre;
+    std::cout << "Ingresa el nombre de la nueva playlist: ";
+    std::getline(std::cin, nombre);
+
+    const std::vector<Playlist>& todas = _repo->getPlaylists();
+    int nuevoId = 1;
+    if (!todas.empty()) {
+        nuevoId = todas.back().getID() + 1;
+    }
+
+    int idUsuario = usuarioLogueado.getID();
+
+    Playlist nueva;
+    nueva.setID(nuevoId);
+    nueva.setNombre(nombre);
+    nueva.setIDUsuario(idUsuario);
+    nueva.setCantidadCanciones(0);
+    nueva.setEstado(true);
+
+    _repo->agregarPlaylist(nueva);
+
+    std::cout << "Playlist creada correctamente." << std::endl;
+    return true;
+}
+
+bool Manager::agregarCancionAPlaylist(Usuario &usuarioLogueado, const Cancion &cancion) {
+    if (_repo == nullptr) return false;
+
+    int idUsuario = usuarioLogueado.getID();   // ya usás getID() en otros métodos
+
+    std::vector<Playlist>& todas = _repo->getPlaylists();
+
+    // listar solo playlists del usuario
+    std::vector<int> indices;
+    std::cout << "===== TUS PLAYLISTS =====" << std::endl;
+
+    for (size_t i = 0; i < todas.size(); ++i) {
+        if (todas[i].getIDUsuario() == idUsuario && todas[i].getEstado()) {
+            indices.push_back((int)i);
+            std::cout << indices.size() << ") " << todas[i].getNombre()
+                      << " (" << todas[i].getCantidadCanciones() << " canciones)" << std::endl;
+        }
+    }
+
+    if (indices.empty()) {
+        std::cout << "No tenes playlists. Crea una primero con la opcion 5." << std::endl;
+        return false;
+    }
+
+    int opcion;
+    std::cout << "Selecciona una playlist: ";
+    std::cin >> opcion;
+
+    if (opcion < 1 || opcion > (int)indices.size()) {
+        std::cout << "Opcion invalida." << std::endl;
+        return false;
+    }
+
+    Playlist &pl = todas[indices[opcion - 1]];
+
+    pl.agregarCancion(cancion);
+
+    std::cout << "Cancion agregada a la playlist '" << pl.getNombre() << "'." << std::endl;
+    return true;
 }

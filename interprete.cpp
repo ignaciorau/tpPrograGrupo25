@@ -18,7 +18,12 @@ void Interprete::setEstado(bool _estado){estado=_estado;}
 void Interprete::setNotificaciones(bool _notificaciones){notificaciones=_notificaciones;}
 
 void cargarInterprete();
-void mostrarInterprete();
+void Interprete::mostrarInterprete() {
+    cout << "ID Interprete: " << idInterprete << endl;
+    cout << "Nombre: " << nombre << endl;
+    cout << "Nacionalidad: " << nacionalidad << endl;
+    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
+}
 
 
 

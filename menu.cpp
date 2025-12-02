@@ -117,13 +117,11 @@ void Menu::manejarMenu(){
     Usuario usuarioLogueado;
 
     //si se logeo correctamente preguntamos si es admin o no
-    if(manejarMenuInicio(usuarioLogueado)){
-        if(usuarioLogueado.getEsAdmin()){
+     if(usuarioLogueado.getEsAdmin()){
             manejarMenuAdmin();
         }else{
-            manejarMenuUsuario();
+            manejarMenuUsuario(usuarioLogueado);
         }
-}
 }
 
 void Menu::mostrarOpcionesUsuario() {
@@ -140,7 +138,7 @@ void Menu::mostrarOpcionesUsuario() {
     cout<<"=========================================="<<endl;
 }
 
-void Menu::manejarMenuUsuario(){
+void Menu::manejarMenuUsuario(Usuario &usuarioLogueado){
     int opc;
     int idCancion;
     do{
@@ -173,6 +171,11 @@ void Menu::manejarMenuUsuario(){
                     case 2:
                         break;
                     case 3:
+                        if (m.agregarCancionAPlaylist(usuarioLogueado, cancionElegida)) {
+                                cout << "La cancion se agrego a la playlist correctamente." << endl;
+                            } else {
+                                cout << "No se pudo agregar la cancion a la playlist." << endl;
+                            }
                         break;
                     case 0:
                         system("cls");
@@ -199,11 +202,41 @@ void Menu::manejarMenuUsuario(){
                 //buscar canciones
                 break;
             case 4:
-                // por implementar
+                {
+                    // VER MIS PLAYLISTS
+                    vector<Playlist> misPlaylists = m.obtenerPlaylistsDeUsuario(usuarioLogueado.getID());
+
+                    if (misPlaylists.empty()) {
+                        cout << "No tenes playlists creadas." << endl;
+                    } else {
+                        cout << "===== TUS PLAYLISTS =====" << endl;
+                        for (size_t i = 0; i < misPlaylists.size(); ++i) {
+                            cout << i+1 << ") " << misPlaylists[i].getNombre()
+                                 << " (" << misPlaylists[i].getCantidadCanciones()
+                                 << " canciones)" << endl;
+                        }
+                    }
+
+                    system("pause");
+                    system("cls");
+                    break;
+                }
                 system("pause");
                 break;
             case 5:
-                //crear playlist
+                 {
+                // CREAR PLAYLIST
+                if (m.crearPlaylist(usuarioLogueado)) {
+                    std::cout << "La playlist fue creada con exito." << std::endl;
+                } else {
+                    std::cout << "No se pudo crear la playlist." << std::endl;
+                }
+
+                system("pause");
+                system("cls");
+                break;
+            }
+            system("pause");
                 break;
             case 6:
                 //ver mi perfil

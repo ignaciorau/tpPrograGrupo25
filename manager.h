@@ -1,6 +1,8 @@
 #pragma once
 #include "repositorio.h"
 #include "usuario.h"
+#include <limits>
+
 class Manager{
 private:
     // puntero al repositorio
@@ -37,5 +39,12 @@ public:
     bool buscarInterprete(Interprete &interpreteEncontrado);
     bool buscarInterpretePorNombre(const char* nombre, Interprete& interpreteEncontrado);
     Interprete seleccionarInterprete(const vector<Interprete> &lista);
+
+        // playlists
+    std::vector<Playlist> obtenerPlaylistsDeUsuario(int idUsuario);
+    bool crearPlaylist(Usuario &usuarioLogueado);
+        //canciones
+    bool agregarCancionAPlaylist(Usuario &usuarioLogueado, const Cancion &cancion);
+
 };
 

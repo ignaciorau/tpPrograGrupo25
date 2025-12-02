@@ -14,6 +14,7 @@ public:
     bool manejarMenuInicio(Usuario &usuarioLogueado);
     void manejarMenu(); //maneja todos los metodos de abajo
     void manejarMenuAdmin();
-    void manejarMenuUsuario();
+    void manejarMenuUsuario(Usuario &usuarioLogueado);
     Menu(Manager& _manager);
+
 };

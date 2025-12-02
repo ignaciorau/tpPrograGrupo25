@@ -2,3 +2,81 @@
 1584205420 source:c:\materias utn\programacion 2\tp integrador\sistemamusicatp\main.cpp
 	<iostream>
 
+1764679059 source:c:\users\franc\tpintegrador\tpprogragrupo25\cancion.cpp
+	<iostream>
+	<cstring>
+	"cancion.h"
+	"interprete.h"
+
+1764676463 c:\users\franc\tpintegrador\tpprogragrupo25\cancion.h
+
+1764676463 c:\users\franc\tpintegrador\tpprogragrupo25\interprete.h
+
+1764678972 source:c:\users\franc\tpintegrador\tpprogragrupo25\interprete.cpp
+	<iostream>
+	<cstring>
+	"interprete.h"
+	<cstring>
+
+1764677572 source:c:\users\franc\tpintegrador\tpprogragrupo25\main.cpp
+	<iostream>
+	"manager.h"
+	"menu.h"
+
+1764683143 c:\users\franc\tpintegrador\tpprogragrupo25\manager.h
+	"repositorio.h"
+	"usuario.h"
+	<limits>
+
+1764683054 c:\users\franc\tpintegrador\tpprogragrupo25\repositorio.h
+	<vector>
+	"usuario.h"
+	"interprete.h"
+	"cancion.h"
+	"interaccion.h"
+	"playlist.h"
+
+1764676463 c:\users\franc\tpintegrador\tpprogragrupo25\usuario.h
+
+1764676463 c:\users\franc\tpintegrador\tpprogragrupo25\interaccion.h
+
+1764682520 c:\users\franc\tpintegrador\tpprogragrupo25\playlist.h
+	<string>
+	"cancion.h"
+	<vector>
+
+1764680007 c:\users\franc\tpintegrador\tpprogragrupo25\menu.h
+	"manager.h"
+
+1764676463 source:c:\users\franc\tpintegrador\tpprogragrupo25\usuario.cpp
+	"usuario.h"
+	<cstring>
+	<iostream>
+
+1764678088 source:c:\users\franc\tpintegrador\tpprogragrupo25\interaccion.cpp
+	"interaccion.h"
+	<iostream>
+	<string>
+
+1764682655 source:c:\users\franc\tpintegrador\tpprogragrupo25\manager.cpp
+	<iostream>
+	<cstdio>
+	<cstring>
+	<string>
+	<limits>
+	<vector>
+	"usuario.h"
+	"manager.h"
+
+1764682799 source:c:\users\franc\tpintegrador\tpprogragrupo25\menu.cpp
+	<iostream>
+	<limits>
+	<string>
+	"menu.h"
+
+1764682545 source:c:\users\franc\tpintegrador\tpprogragrupo25\playlist.cpp
+	"playlist.h"
+
+1764683119 source:c:\users\franc\tpintegrador\tpprogragrupo25\repositorio.cpp
+	"repositorio.h"
+

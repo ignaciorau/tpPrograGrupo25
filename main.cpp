@@ -11,6 +11,6 @@ int main()
     Manager _manager(&repo);
     Menu m(_manager);
 
-    m.manejarMenuInicio();
+    m.manejarMenu();
     return 0;
 }
