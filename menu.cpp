@@ -308,8 +308,7 @@ void Menu::manejarMenuAdmin(){
                 break;
 
             case 4:
-                // funcion que permita cambiarle el nombre por ejemplo
-                cout<<"Modificar cancion"<<endl;
+                m.verTodasLasCanciones();
                 system("pause");
                 break;
 
@@ -353,3 +352,4 @@ void Menu::manejarMenuAdmin(){
 
     }while(opc!=0);
 }
+
