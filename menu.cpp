@@ -199,7 +199,7 @@ void Menu::manejarMenuUsuario(Usuario &usuarioLogueado){
                 break;
             }
             case 3:
-                //buscar canciones
+                m.verTodasLasCanciones();
                 break;
             case 4:
                 {
@@ -352,4 +352,5 @@ void Menu::manejarMenuAdmin(){
 
     }while(opc!=0);
 }
+
 
