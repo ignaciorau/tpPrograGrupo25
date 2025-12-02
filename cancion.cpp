@@ -12,7 +12,7 @@ Cancion::Cancion() {
     genero = 0;
     reproducciones = 0;
     likes = 0;
-    estado = false;
+    estado = true;
     nombreInterprete[0] = '\0';
 }
 int Cancion::getIDCancion(){return idCancion;}
@@ -45,12 +45,12 @@ void cargarCancion();
 void Cancion::mostrarCancion() {
     cout << "ID: " << idCancion << endl;
     cout << "Titulo: " << titulo << endl;
+    cout << "Interprete: " << nombreInterprete << endl;
     cout << "ID Interprete: " << IDInterprete << endl;
     cout << "Genero: " << genero << endl;
     cout << "Reproducciones: " << reproducciones << endl;
     cout << "Likes: " << likes << endl;
-    cout << "Estado: " << (estado ? "Activo" : "Inactivo") << endl;
-    cout << "Interprete: " << nombreInterprete << endl;
 }
+
 
 
