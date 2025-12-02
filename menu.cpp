@@ -116,12 +116,14 @@ bool Menu::manejarMenuInicio(Usuario &usuarioLogueado){
 void Menu::manejarMenu(){
     Usuario usuarioLogueado;
 
-    //si se logeo correctamente preguntamos si es admin o no
-     if(usuarioLogueado.getEsAdmin()){
+    //el ciclo sigue si el usuario esta logueado
+     while(manejarMenuInicio(usuarioLogueado)){
+        if(usuarioLogueado.getEsAdmin()){
             manejarMenuAdmin();
         }else{
-            manejarMenuUsuario(usuarioLogueado);
+            manejarMenuUsuario();
         }
+    }
 }
 
 void Menu::mostrarOpcionesUsuario() {
@@ -352,5 +354,6 @@ void Menu::manejarMenuAdmin(){
 
     }while(opc!=0);
 }
+
 
 
