@@ -12,6 +12,23 @@ Manager::Manager(Repositorio* repo) {
     _repo = repo;
 }
 
+void Manager::verTodasLasCanciones(){
+    FILE* pfileCanciones=fopen("canciones.dat", "rb");
+
+    if(pfileCanciones == nullptr) {
+        cout << "No se pudo abrir el archivo." << endl;
+    }
+
+    cout<<"-----------CANCIONES-----------"<<endl;
+
+    Cancion c;
+
+    while(fread(&c, sizeof(Cancion), 1, pfileCanciones)){
+        c.mostrarCancion();
+        cout<<endl;
+    }
+}
+
 bool Manager::eliminarCancion(){
     char nombre[40];
     int pos;
@@ -624,3 +641,4 @@ bool Manager::agregarCancionAPlaylist(Usuario &usuarioLogueado, const Cancion &c
     std::cout << "Cancion agregada a la playlist '" << pl.getNombre() << "'." << std::endl;
     return true;
 }
+
