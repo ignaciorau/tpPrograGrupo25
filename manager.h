@@ -27,6 +27,7 @@ public:
     //canciones
     bool agregarCancion();
     bool eliminarCancion();
+    void verTodasLasCanciones();
     bool buscarCancion(Cancion &cancionBuscada);
     bool buscarCancionPorId(int id, Cancion& cancionEncontrada);
     bool buscarCancionPorNombre(const char* nombre, Cancion& cancionEncontrada);
@@ -47,4 +48,5 @@ public:
     bool agregarCancionAPlaylist(Usuario &usuarioLogueado, const Cancion &cancion);
 
 };
+
 
